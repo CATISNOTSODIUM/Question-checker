@@ -1,4 +1,4 @@
-<h1> Data seralization JSON convention </h1>
+<h1> Data Serialization (JSON Convention) </h1>
 <h2> Front-end </h2>
 
 <h3> Sending response from front-end to back-end </h3>
