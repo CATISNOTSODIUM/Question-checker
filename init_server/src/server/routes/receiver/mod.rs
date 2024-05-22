@@ -39,7 +39,10 @@ pub async fn handler(payload: MyBareResponse) -> Result<String, Box<dyn std::err
 
     //check question type
     if target_answer.clone().question_type !=  response.clone().question_type{
-        return Err("According to the question-id, the expected question type for this response format is not the same as the question type identified in the database.")?;
+        return Err(format!("According to the question-id, the expected question type for this response \
+        format is not the same as the question type identified in the database. \
+        Got {:?} instead of {:?}.", 
+        &response.question_type, &target_answer.question_type))?;
     }
 
     //check answer
