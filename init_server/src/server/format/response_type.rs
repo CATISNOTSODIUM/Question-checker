@@ -60,7 +60,40 @@ impl MyBareResponse {
 
 impl MyResponse {
     pub fn detailed_check(&self) -> Result<(),  Box<dyn std::error::Error>> {
- 
+        //Length of answer and answer_index must be equal
+        if self.body.answer.len() != self.body.answer_index.len() {
+             return Err("The length of answer and answer_index must be equal.")?;
+        }
+
+        match self.question_type {
+            QuestionType::MCQ => {
+                //length of answer and answer index must be one
+                if self.body.answer.len() != 1 {
+                    return Err("MCQ Error: Length of answer and answer_index must be one.")?;
+                }
+            },
+            QuestionType::TFQ => {
+
+                //length of answer and answer index must be one
+                if self.body.answer.len() != 1 {
+                    return Err("TFQ Error: Length of answer and answer_index must be one.")?;
+                }
+
+                //check if the answer is true / false
+                if self.body.answer[0] != "True".to_string() && self.body.answer[0] != "False".to_string(){
+                    return Err("TFQ Error: The answer must be true or false.")?;
+                }
+
+            },
+            QuestionType::CAT => {
+                if self.body.answer.len() < 2 {
+                    return Err("CAT Error: Length of answer and answer_index must be at least two.")?;
+                } 
+            },
+            QuestionType::ERC => {
+                //not yet implemented
+            }
+        }
         Ok(())
     }
 }

@@ -18,7 +18,7 @@ pub struct MyBareBody {
 }
 ```
 
-Before parsing the data into the `MyResponse` struct, `handler::convert_format` performs a **preliminary** check to ensure the data format remains valid.
+Before parsing the data into the `MyResponse` struct, `handler::convert_format` performs a **preliminary** check to ensure the data format remains valid. 
 
 ```
 #[derive(Deserialize, Serialize, Debug, Clone)]

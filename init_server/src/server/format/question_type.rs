@@ -79,7 +79,7 @@ impl MyQuestion {
             QuestionType::TFQ => {
                 //label must be null
                 if !self.body.label.is_none() {
-                    return Err("MCQ Error: body.label must be null.")?;
+                    return Err("TFQ Error: body.label must be null.")?;
                 }
                 //choice must be True, False 
                 if self.body.choices !=  ["False".to_owned(), "True".to_owned()] &&
