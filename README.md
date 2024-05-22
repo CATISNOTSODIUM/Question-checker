@@ -1,35 +1,6 @@
 <h1> Data Serialization (JSON Convention) </h1>
 <h2> Front-end </h2>
 
-<h3> Sending response from front-end to back-end </h3>
-
-<h3>Input</h3> 
-
-This JSON format is used when sending data from front-end to back-end to check the answer.
-
-
-```
-
-{
-
-    "question_id": [competency_id]_[skillset-id]_[skill-id]_[question-index],
-
-    "question_type": [question_type],
-
-    "body": {
-        "answer": string, 
-        "answer_index": u32,
-    }
-}
-
-
-```
-
-The child object `body.answer` and `body.answer_index` are included to add an extra-step verification. (It can be removed later on.) 
-
-<h3>Response</h3> 
-
-To be designed.
 
 <h3> JSON format for displaying question </h3>
 
@@ -79,6 +50,58 @@ Example:
 
 ```
 
+<h3> Sending response from front-end to back-end </h3>
+
+<h3>Input</h3> 
+
+This JSON format is used when sending data from front-end to back-end to check the answer. 
+
+
+```
+
+{
+
+    "question_id": String [competency_id]_[skillset-id]_[skill-id]_[question-index],
+
+    "question_type": String [question_type],
+
+    "body": {
+        "answer": Vec<string>, 
+        "answer_index": Vec<u32>,
+    }
+}
+
+
+```
+
+The child object `body.answer` and `body.answer_index` are included to add an extra-step verification. (It can be removed later on.) 
+
+Example 
+```
+{
+        "question_id": "ABC-123_456_789_0",
+        "question_type":"MCQ",
+        "body": {
+            "answer_index": [0],
+            "answer": ["stop"]
+        }
+}
+```
+```
+{
+        "question_id": "ABC-123_456_789_0",
+        "question_type":"CAT",
+        "body": {
+            "answer_index": [0,1],
+            "answer": ["vegetable","fruit"]
+        }
+}
+```
+<h3>Response</h3> 
+
+To be designed.
+
+
 <h2> Back-end </h2>
 
 
@@ -119,7 +142,16 @@ True false: `TFQ `       <br>
 Categorization: `CAT`  <br>
 Error checking: `ERC`   <br>
 
-Even though `MCQ, TFQ, ERC` have the same input-output format, this differentiation is preferred for error handling. Please check out the following templates for clarification.
+In Rust, all question types are represented by `enum QuestionType`. 
+
+```
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
+pub enum QuestionType {
+    MCQ, TFQ, CAT, ERC
+}
+```
+
+Even though `MCQ, TFQ, ERC` have the same input-output format, this differentiation is preferred for error handling. (Check `init_server/src/server/format/question_type.rs`) Please check out the following templates for clarification.
 
 Noted that `image` feature has not been implemented yet.
 
@@ -193,7 +225,7 @@ Error-checking `ERC`
 ```
  "body": {
     "question": "Identify which line should be adjusted to be correct.",
-    "label": "int main():\n print("hello world")",
+    "label": ["int main():\n print("hello world")"],
     "choices": [
         "All"
     ]
@@ -204,7 +236,7 @@ Error-checking `ERC`
 ```
  "body": {
     "question": "Identify which line should be adjusted to be correct.",
-    "label": "int main():\n print("hello world")",
+    "label": ["int main():\n print("hello world")"],
     "choices": [
         "1", "3", "5"
     ]
