@@ -4,7 +4,7 @@ use axum::http::Method;
 
 
 pub mod routes;
-
+pub mod format;
 
 pub async fn initialize_server(){
 
@@ -15,7 +15,7 @@ pub async fn initialize_server(){
 
     let app = Router::new()
     .route("/", get(|| async { "root" }))
-    .route("/mail_box", get(routes::sender::send_question))
+    .route("/mail_box/:query", get(routes::sender::send_question))
     .route("/mail_box", post(routes::receiver::check_answer))
 	.layer(cors);
 

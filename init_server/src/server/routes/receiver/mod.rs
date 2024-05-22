@@ -1,11 +1,10 @@
-pub mod response_type;
 pub mod handler;
 
 use axum::{Json,
     response::IntoResponse,
     http::StatusCode};
-use response_type::MyBareResponse;
-use handler::{convert_format, get_answer};
+use crate::server::format::response_type::MyBareResponse;
+use handler::fetch_answer;
 
 
 pub async fn check_answer(
@@ -24,10 +23,11 @@ Json(payload): Json<MyBareResponse>,) -> impl IntoResponse
 
 pub async fn handler(payload: MyBareResponse) -> Result<String, Box<dyn std::error::Error>>  {
      //Struct validation: convert MyBareResponse -> MyResposne
-    let response = convert_format(&payload)?;
-
+    let response = payload.convert_format()?;
+    //detailed check
+    response.detailed_check()?;
     //retrieve the answer key (which is a list of all questions)
-    let answers_list = get_answer("answer.json".to_owned()).await?;
+    let answers_list = fetch_answer("question.json".to_owned()).await?;
 
     //Brute force finding the question that has the same id with response.  (which is bad)
 
