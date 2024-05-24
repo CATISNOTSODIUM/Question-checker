@@ -6,5 +6,5 @@ edition = "2021"
 [workspace]
 
 members = [
-    "init_server",
+    "init_server","init_server_rpc","init_server_graphql"
 ]

@@ -1,0 +1,15 @@
+ALG-003:
+  01:
+    01:
+    - content.md
+    - exercise1.json
+    02: 
+    - content.md
+    - exercise1.json
+  02:
+    01:
+    - content.md
+    - exercise1.json
+    02: 
+    - content.md
+    - exercise1.json

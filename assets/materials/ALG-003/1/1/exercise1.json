@@ -1,0 +1,26 @@
+[
+    {
+        "question_id": "MCQ_1_0",
+        "body": {
+            "question": "A flashing red traffic light signifies that a driver should do what?",
+            "label": null,
+            "choices": [
+                "stop",
+                "shutup"
+            ],
+            "answer": ["stop"]
+        }
+    },
+    {
+        "question_id": "TFQ_1_1",
+        "body": {
+            "question": "London bridge is falling down.",
+            "label": null,
+            "choices": [
+                "True",
+                "False"
+            ],
+            "answer": ["True"]
+        }
+    }
+]

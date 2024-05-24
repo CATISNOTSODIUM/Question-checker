@@ -1,7 +1,6 @@
 [
     {
-        "problem_id": "ABC-123_456_789_0",
-        "problem_type": "MCQ",
+        "question_id": "MCQ_1_0",
         "body": {
             "question": "A flashing red traffic light signifies that a driver should do what?",
             "label": null,
@@ -9,22 +8,18 @@
                 "stop",
                 "shutup"
             ],
-            "answer_index": 0,
-            "answer":"stop"
+            "answer": "stop"
         }
     },
     {
-        "problem_id": "ABC-123_456_789_1",
-        "problem_type": "TFQ",
+        "question_id": "TFQ_1_1",
         "body": {
             "question": "London bridge is falling down.",
             "label": null,
             "choices": [
-                "False",
-                "True"
-            ],
-            "answer_index": 1,
-            "answer": "True"
+                "True",
+                "False"
+            ]
         }
     }
 ]

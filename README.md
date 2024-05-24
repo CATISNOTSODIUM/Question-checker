@@ -12,7 +12,7 @@ This JSON format is used when sending data from back-end to front-end.
 
 {
 
-    "question_id": [competency_id]_[skillset-id]_[skill-id]_[question-index],
+    "question_id": Q_[skill-id]_[question-index],
 
     "question_type": [question_type],
 
@@ -33,7 +33,7 @@ Example:
 #index.json
 {
 
-"question_id": "ABC-123_456_789_1",
+"question_id": "Q_789_1",
 
 "question_type": "MCQ",
 
@@ -61,13 +61,9 @@ This JSON format is used when sending data from front-end to back-end to check t
 
 {
 
-    "question_id": String [competency_id]_[skillset-id]_[skill-id]_[question-index],
-
-    "question_type": String [question_type],
-
+    "question_id": String [question_type]_[skill-id]_[question-index],
     "body": {
         "answer": Vec<string>, 
-        "answer_index": Vec<u32>,
     }
 }
 
@@ -79,20 +75,16 @@ The child object `body.answer` and `body.answer_index` are included to add an ex
 Example 
 ```
 {
-        "question_id": "ABC-123_456_789_0",
-        "question_type":"MCQ",
+        "question_id": "MCQ_789_0",
         "body": {
-            "answer_index": [0],
             "answer": ["stop"]
         }
 }
 ```
 ```
 {
-        "question_id": "ABC-123_456_789_0",
-        "question_type":"CAT",
+        "question_id": "CAT_789_0",
         "body": {
-            "answer_index": [0,1],
             "answer": ["vegetable","fruit"]
         }
 }
@@ -110,8 +102,7 @@ The question and answer of each question are stored in the same JSON object as s
 ```
 #JSON template for one problem
 {
-    "problem_id": "ABC-123_456_789_0",
-    "problem_type": "MCQ",
+    "problem_id": "MCQ_789_0",
     "body": {
         "question": "A flashing red traffic light signifies that a driver should do what?",
         "label": null,
@@ -119,7 +110,6 @@ The question and answer of each question are stored in the same JSON object as s
             "stop",
             "shutup"
         ],
-        "answer_index": 0,
         "answer":"stop"
     }
 }
@@ -141,6 +131,7 @@ Multiple choice: `MCQ` <br>
 True false: `TFQ `       <br> 
 Categorization: `CAT`  <br>
 Error checking: `ERC`   <br>
+Error checking (Syntax): `ECS`   <br>
 
 In Rust, all question types are represented by `enum QuestionType`. 
 
@@ -217,7 +208,7 @@ Categorization questions*  `CAT`
 
 <h3> 
 
-Error-checking `ERC` 
+Error-checking `ERC/ECS` 
 
 </h3>
 

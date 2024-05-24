@@ -1,0 +1,62 @@
+[
+    {
+        "question_id": "MCQ_2_0",
+        "body": {
+            "question": "What is the capital city of France?",
+            "label": null,
+            "choices": [
+                "Paris",
+                "London",
+                "Madrid",
+                "Berlin"
+            ],
+            "answer": [
+                "Paris"
+            ]
+        }
+    },
+    {
+        "question_id": "TFQ_2_1",
+        "body": {
+            "question": "The Earth is flat.",
+            "label": null,
+            "choices": [
+                "True",
+                "False"
+            ],
+            "answer": [
+                "False"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_2_2",
+        "body": {
+            "question": "Which of the following is a prime number?",
+            "label": null,
+            "choices": [
+                "6",
+                "9",
+                "17",
+                "22"
+            ],
+            "answer": [
+                "17"
+            ]
+        }
+    },
+    {
+        "question_id": "TFQ_2_3",
+        "body": {
+            "question": "Water freezes at 0 degrees Celsius.",
+            "label": null,
+            "choices": [
+                "True",
+                "False"
+            ],
+            "answer": [
+                "True"
+            ]
+        }
+    }
+]
