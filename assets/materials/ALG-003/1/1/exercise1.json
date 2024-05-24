@@ -8,7 +8,9 @@
                 "stop",
                 "shutup"
             ],
-            "answer": ["stop"]
+            "answer": [
+                "stop"
+            ]
         }
     },
     {
@@ -20,7 +22,135 @@
                 "True",
                 "False"
             ],
-            "answer": ["True"]
+            "answer": [
+                "True"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_2",
+        "body": {
+            "question": "Who is the first prime minister of Thailand?",
+            "label": null,
+            "choices": [
+                "GEN Prayut Chan-o-cha",
+                "John F. Kennedy",
+                "FM Por Piboonsongkarm",
+                "Phraya Manopakornnititada"
+            ],
+            "answer": [
+                "Phraya Manopakornnititada"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_3",
+        "body": {
+            "question": "Who killed Princess Diana?",
+            "label": null,
+            "choices": [
+                "Elizabeth II",
+                "Meghan Markle",
+                "Paparazzi",
+                "Charles III"
+            ],
+            "answer": [
+                "Elizabeth II"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_4",
+        "body": {
+            "question": "What is Taylor Swift's most recent album?",
+            "label": null,
+            "choices": [
+                "Dead Poets Society",
+                "The Tortured Audience Department",
+                "Inaudible Sounds",
+                "Randomly-generated Lyrics"
+            ],
+            "answer": [
+                "Dead Poets Society"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_5",
+        "body": {
+            "question": "What is 5338289/3748?",
+            "label": null,
+            "choices": [
+                "An integer",
+                "A complex number",
+                "A transgender",
+                "A float"
+            ],
+            "answer": [
+                "A float"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_6",
+        "body": {
+            "question": "How can we learn about induction?",
+            "label": null,
+            "choices": [
+                "POSN Camp",
+                "Damrong Thipyotha",
+                "Sup'K",
+                "Witsarut Pho-on"
+            ],
+            "answer": [
+                "Damrong Thipyotha"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_7",
+        "body": {
+            "question": "What does Beam hate the most?",
+            "label": null,
+            "choices": [
+                "Death",
+                "Caltex",
+                "RedBlack",
+                "Himself"
+            ],
+            "answer": [
+                "RedBlack"
+            ]
+        }
+    },
+    {
+        "question_id": "MCQ_1_8",
+        "body": {
+            "question": "What is the purpose of binary search?",
+            "label": null,
+            "choices": [
+                "To find non-binary people and discriminate against them",
+                "To construct a binary tree, just like King Rama IX who planted a tree for us",
+                "To find an entry in an ordered list",
+                "To find love in a hopeless place"
+            ],
+            "answer": [
+                "To find an entry in an ordered list"
+            ]
+        }
+    },
+    {
+        "question_id": "TFQ_1_9",
+        "body": {
+            "question": "The nontrivial zeros of the Riemann zeta function all have real part 1/2.",
+            "label": null,
+            "choices": [
+                "True",
+                "False"
+            ],
+            "answer": [
+                "True"
+            ]
         }
     }
 ]

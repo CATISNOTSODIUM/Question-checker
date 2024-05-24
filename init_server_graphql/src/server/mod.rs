@@ -10,7 +10,7 @@ use async_graphql_axum::GraphQL;
 
  
 async fn graphiql() -> impl IntoResponse {
-    axum::response::Html(GraphiQLSource::build().endpoint("/api/graph_ql").finish())
+    axum::response::Html(GraphiQLSource::build().endpoint("/api/graphql").finish())
 }
 
 
@@ -29,7 +29,7 @@ pub async fn initialize_server() -> Result<(), Box<dyn std::error::Error>> {
     .route("/", get(|| async { "root" }))
     //.route("/api/graph_ql", post_service(GraphQL::new(my_schema)))
     //playground
-    .route("/api/graph_ql", get(graphiql).post_service(GraphQL::new(my_schema)))
+    .route("/api/graphql", get(graphiql).post_service(GraphQL::new(my_schema)))
     .route("/api/mark_down", get(read_markdown))
     .layer(cors);
 

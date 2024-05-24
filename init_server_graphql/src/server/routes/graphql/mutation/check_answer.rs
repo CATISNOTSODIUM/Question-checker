@@ -57,9 +57,12 @@ impl CheckAnswer {
 
         // Check if all questions are answered
         let unanswered_count = number_question - correct_answer - wrong_answer - failed_submission_answer;
+        
         //Add progress to database for user: User 
         //To be implemented
-
+        if unanswered_count == 0 {
+            //add data to database
+        }
 
         // Send report back to user
         Ok(ScoreReport {

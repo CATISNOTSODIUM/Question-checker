@@ -1,0 +1,75 @@
+
+mutation {
+	checkAnswers (
+    user: {
+      displayName: "gen-answer"
+    }
+    filePath: "ALG-003/1/1/exercise1.json",
+    payloads: [{
+        questionId: "MCQ_1_0",
+        body: {
+            answer: ["shutup"]
+        }
+    }
+    {
+        questionId: "TFQ_1_1",
+        body: {
+            answer: ["True"]
+        }
+    }
+    {
+        questionId: "MCQ_1_2",
+        body: {
+            answer: ["Phraya Manopakornnititada"]
+        }
+    }
+    {
+        questionId: "MCQ_1_3",
+        body: {
+            answer: ["Paparazzi"]
+        }
+    }
+    {
+        questionId: "MCQ_1_4",
+        body: {
+            answer: ["Inaudible Sounds"]
+        }
+    }
+    {
+        questionId: "MCQ_1_5",
+        body: {
+            answer: ["A complex number"]
+        }
+    }
+    {
+        questionId: "MCQ_1_6",
+        body: {
+            answer: ["Damrong Thipyotha"]
+        }
+    }
+    {
+        questionId: "MCQ_1_7",
+        body: {
+            answer: ["Himself"]
+        }
+    }
+    {
+        questionId: "MCQ_1_8",
+        body: {
+            answer: ["To find an entry in an ordered list"]
+        }
+    }
+    {
+        questionId: "TFQ_1_9",
+        body: {
+            answer: ["False"]
+        }
+    }
+    ]
+  ) {
+    correct
+    wrong
+  	unanswered
+    failed
+  }
+}
