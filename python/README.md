@@ -18,3 +18,11 @@ To clear the folder before generating files, use `-d`
 ```
 python3 gen_dir.py [file_name].yml -d
 ```
+
+<h3> Generate random answers </h3>
+
+```
+python3 gen-answer.py [file_name].json 
+```
+
+The GraphQL mutation input will be generated at `log.txt`. 
