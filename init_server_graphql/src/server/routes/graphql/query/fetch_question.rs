@@ -1,23 +1,25 @@
 use std::{fs::File, io::Read};
 use serde_json;
-use async_graphql::{ComplexObject,Result};
+use async_graphql::{ComplexObject,Result,Context};
 
 pub use crate::server::routes::graphql::question_types::*;
 
 
 #[ComplexObject]
 impl MyBareQuestion {
-    pub async fn get_question(&self, file_path: String,question_id: String) -> Result<MyQuestion> {
+    pub async fn get_question(&self,ctx: &Context<'_>, file_path: String,question_id: String) -> Result<MyQuestion> {
         
         // Get MyQuestion
         let question = fetch_question(&file_path,&question_id)
         .await
         .map_err(|e| format!("{}",e).into());
 
-
         question
     }
-    pub async fn get_questions(&self, file_path: String) -> Result<Vec<MyQuestion>> {
+
+    pub async fn get_questions(&self, ctx: &Context<'_>,  file_path: String) -> Result<Vec<MyQuestion>> {
+        //you can replace file path with ctx
+        
         fetch_questions(&file_path).await
         .map_err(|e| format!("{}",e).into())
     }

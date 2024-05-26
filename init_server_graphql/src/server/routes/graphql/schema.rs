@@ -8,6 +8,8 @@ pub fn build_my_schema() -> Schema<QueryRoot, MutationRoot, EmptySubscription> {
         QueryRoot::default(), 
         MutationRoot::default(), 
         EmptySubscription)
+        //TODO: Add database here
+        //.data(db)
         .finish()
 }
 

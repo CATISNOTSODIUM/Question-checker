@@ -15,7 +15,7 @@ pub struct CheckAnswer;
 impl CheckAnswer {
     //simple return CORRECT/WRONG for each question
     pub async fn check_answer
-    (&self, user: User, file_path: String, payload: MyBareResponse) -> Result<String>
+    (&self,ctx: &Context<'_>,user: User, file_path: String, payload: MyBareResponse) -> Result<String>
     { 
         let result:Result<bool> = handler(&file_path,payload)
         .await.map_err(|e| format!("{}",e).into());
@@ -32,8 +32,12 @@ impl CheckAnswer {
             Err(e) => Err(e),
         }
     }
-    pub async fn check_answers // For submission
-    (&self, user: User, file_path: String, payloads: Vec<MyBareResponse>) -> Result<ScoreReport>
+    
+    
+    // Check answers of all questions in the file
+    // For submission
+    pub async fn check_answers 
+    (&self,ctx: &Context<'_>, user: User, file_path: String, payloads: Vec<MyBareResponse>) -> Result<ScoreReport>
     { 
         //Find number of questions inside the file
         let answers_list:Result<Vec<MyResponse>> = fetch_answer(&file_path)
@@ -58,7 +62,7 @@ impl CheckAnswer {
         // Check if all questions are answered
         let unanswered_count = number_question - correct_answer - wrong_answer - failed_submission_answer;
         
-        //Add progress to database for user: User 
+        //TODO: Add progress to database for user: User 
         //To be implemented
         if unanswered_count == 0 {
             //add data to database
@@ -73,9 +77,9 @@ impl CheckAnswer {
         })
 
     }
-
-
 }
+
+
 
 #[derive(SimpleObject)]
 pub struct ScoreReport{
@@ -85,7 +89,9 @@ pub struct ScoreReport{
     failed: u32,
 } 
 
-//file path example ABC-123/4/5/E xercise.md
+
+// Check answer from the desired file path
+// file path example ABC-123/4/5/E xercise.md
 pub async fn handler(file_path: &String, payload: MyBareResponse) -> Result<bool, Box<dyn std::error::Error>>  {
      //Struct validation: convert MyBareResponse -> MyResposne
     let response = payload.convert_format()?;
