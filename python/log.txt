@@ -14,19 +14,19 @@ mutation {
     {
         questionId: "TFQ_1_1",
         body: {
-            answer: ["True"]
+            answer: ["False"]
         }
     }
     {
         questionId: "MCQ_1_2",
         body: {
-            answer: ["Phraya Manopakornnititada"]
+            answer: ["John F. Kennedy"]
         }
     }
     {
         questionId: "MCQ_1_3",
         body: {
-            answer: ["Paparazzi"]
+            answer: ["Charles III"]
         }
     }
     {
@@ -38,19 +38,19 @@ mutation {
     {
         questionId: "MCQ_1_5",
         body: {
-            answer: ["A complex number"]
+            answer: ["A transgender"]
         }
     }
     {
         questionId: "MCQ_1_6",
         body: {
-            answer: ["Damrong Thipyotha"]
+            answer: ["Sup"K"]
         }
     }
     {
         questionId: "MCQ_1_7",
         body: {
-            answer: ["Himself"]
+            answer: ["Death"]
         }
     }
     {

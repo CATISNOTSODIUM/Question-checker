@@ -23,6 +23,8 @@ python3 gen_dir.py [file_name].yml -d
 
 ```
 python3 gen-answer.py [file_name].json 
+
+#Example: python3 gen-answer.py ALG-003/1/1/exercise1.json
 ```
 
 The GraphQL mutation input will be generated at `log.txt`. 
