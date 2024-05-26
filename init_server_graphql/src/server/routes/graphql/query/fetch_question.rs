@@ -1,13 +1,15 @@
 use std::{fs::File, io::Read};
 use serde_json;
-use async_graphql::{ComplexObject,Result,Context};
+use async_graphql::{Object,Result,Context};
 
 pub use crate::server::routes::graphql::question_types::*;
 
+#[derive(Default)]
+pub struct FetchQuestion;
 
-#[ComplexObject]
-impl MyBareQuestion {
-    pub async fn get_question(&self,ctx: &Context<'_>, file_path: String,question_id: String) -> Result<MyQuestion> {
+#[Object]
+impl FetchQuestion {
+    pub async fn get_question(&self,_ctx: &Context<'_>, file_path: String,question_id: String) -> Result<MyQuestion> {
         
         // Get MyQuestion
         let question = fetch_question(&file_path,&question_id)
@@ -17,9 +19,7 @@ impl MyBareQuestion {
         question
     }
 
-    pub async fn get_questions(&self, ctx: &Context<'_>,  file_path: String) -> Result<Vec<MyQuestion>> {
-        //you can replace file path with ctx
-        
+    pub async fn get_questions(&self, _ctx: &Context<'_>,  file_path: String) -> Result<Vec<MyQuestion>> {
         fetch_questions(&file_path).await
         .map_err(|e| format!("{}",e).into())
     }
@@ -42,14 +42,14 @@ pub async fn fetch_question(file_path: &String, question_id: &String) -> Result<
     let mut file = File::open(target_dir)?;
     let mut data = String::new();
     file.read_to_string(&mut data)?;
-    let answers_list : Vec<MyBareQuestion> = serde_json::from_str(data.as_str())?;
+    let answers_list : Vec<MyQuestion> = serde_json::from_str(data.as_str())?;
 
 
     let target_answer_index = answers_list.iter()
     .position(|ans| ans.question_id == question_id.clone())
     .ok_or("Cannot find question id from database.")?; 
     
-    let response = answers_list[target_answer_index].convert_format()?;
+    let response = answers_list[target_answer_index].clone();
     
     //check the question format based on question types.
     response.detailed_check()?;
@@ -65,14 +65,14 @@ pub async fn fetch_questions(file_path: &String) -> Result<Vec<MyQuestion>, Box<
     let mut file = File::open(target_dir)?;
     let mut data = String::new();
     file.read_to_string(&mut data)?;
-    let question_list : Vec<MyBareQuestion> = serde_json::from_str(data.as_str())?;
+    let question_list : Vec<MyQuestion> = serde_json::from_str(data.as_str())?;
 
     // Question list
     let mut response: Vec<MyQuestion> = Vec::new();
     for my_bare_question in question_list {
         // First step: check the format of each question
         check_question_id_format(&my_bare_question.question_id).await?;
-        let my_question = my_bare_question.clone().convert_format()?;
+        let my_question = my_bare_question.clone();
         my_question.detailed_check()?; // Final check
         response.push(my_question);
     }

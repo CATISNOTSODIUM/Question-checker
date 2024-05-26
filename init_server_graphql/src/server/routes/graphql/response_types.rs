@@ -1,50 +1,29 @@
+//Written by Thitiwat Kosolpattanadurong
 use serde::{Deserialize, Serialize};
 use async_graphql::{InputObject, SimpleObject};
 
-//BARE FORMAT
-//the formats are not checked.
-#[derive(InputObject)]
-#[graphql(complex)]
-#[derive(Deserialize, Debug, Default)]
-pub struct MyBareResponse { 
-    pub question_id: String,
-    pub body: MyBareResponseBody,
+/*
+Here is the structure of the response sent to frontend. 
+{
+    question_id: String
+    body: {
+        answer: Vec<String> (This implementation supports CAT questions.)
+    }
 }
+*/
 
 
-#[derive(InputObject)]
-#[derive(Deserialize, Debug, Default,Serialize)]
-pub struct MyBareResponseBody {
-    pub answer: Vec<String>,
-}
-
-//actual data type
-
-#[derive(SimpleObject)]
+#[derive(SimpleObject, InputObject)]
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
 pub struct MyResponse { 
     pub question_id: String,
     pub body: MyBody,
 }
 
-#[derive(SimpleObject)]
+#[derive(SimpleObject,InputObject)]
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
 pub struct MyBody {
     pub answer: Vec<String>,
-}
-
-
-impl MyBareResponse {
-
-    pub fn convert_format(&self) -> Result<MyResponse, Box<dyn std::error::Error>> {
-        // parse MyBareResponse -> MyResponse
-        Ok(MyResponse {
-            question_id: self.question_id.clone(),
-            body: MyBody {
-                answer: self.body.answer.clone(),
-            }
-        })
-    }
 }
 
 

@@ -1,6 +1,6 @@
 use std::{fs::File, io::Read};
 use serde_json;
-use async_graphql::{Context, InputObject, Object, Result, SimpleObject};
+use async_graphql::{Context, Object, Result, SimpleObject};
 
 pub use crate::server::routes::graphql::response_types::*;
 use crate::server::routes::graphql::types::User;
@@ -15,15 +15,10 @@ pub struct CheckAnswer;
 impl CheckAnswer {
     //simple return CORRECT/WRONG for each question
     pub async fn check_answer
-    (&self,ctx: &Context<'_>,user: User, file_path: String, payload: MyBareResponse) -> Result<String>
+    (&self,_ctx: &Context<'_>,user: User, file_path: String, payload: MyResponse) -> Result<String>
     { 
         let result:Result<bool> = handler(&file_path,payload)
         .await.map_err(|e| format!("{}",e).into());
-
-        //Add progress to database for user: User 
-        //To be implemented
-
-
         
         // Inform client 
         match result {
@@ -37,7 +32,7 @@ impl CheckAnswer {
     // Check answers of all questions in the file
     // For submission
     pub async fn check_answers 
-    (&self,ctx: &Context<'_>, user: User, file_path: String, payloads: Vec<MyBareResponse>) -> Result<ScoreReport>
+    (&self, _ctx: &Context<'_>, _user: User, file_path: String, payloads: Vec<MyResponse>) -> Result<ScoreReport>
     { 
         //Find number of questions inside the file
         let answers_list:Result<Vec<MyResponse>> = fetch_answer(&file_path)
@@ -47,7 +42,7 @@ impl CheckAnswer {
         // Rough check
         let mut correct_answer = 0;
         let mut wrong_answer = 0;
-        let mut failed_submission_answer = 0; // Cannot check 
+        let mut failed_submission_answer = 0; // Invalid response 
 
         for payload in payloads{
             let result:Result<bool> = handler(&file_path,payload)
@@ -64,7 +59,7 @@ impl CheckAnswer {
         
         //TODO: Add progress to database for user: User 
         //To be implemented
-        if unanswered_count == 0 {
+        if unanswered_count == 0 { //All questions have been answered.
             //add data to database
         }
 
@@ -92,9 +87,9 @@ pub struct ScoreReport{
 
 // Check answer from the desired file path
 // file path example ABC-123/4/5/E xercise.md
-pub async fn handler(file_path: &String, payload: MyBareResponse) -> Result<bool, Box<dyn std::error::Error>>  {
+pub async fn handler(file_path: &String, payload: MyResponse) -> Result<bool, Box<dyn std::error::Error>>  {
      //Struct validation: convert MyBareResponse -> MyResposne
-    let response = payload.convert_format()?;
+    let response = payload;
     //detailed check
     response.detailed_check()?;
 

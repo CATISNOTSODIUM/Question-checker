@@ -1,26 +1,20 @@
+//Written by Thitiwat Kosolpattanadurong
 use serde::{Deserialize, Serialize};
 use async_graphql::SimpleObject;
 
-//QUERY QUESTION
-//RAW DATA FROM DATABASE
-#[derive(SimpleObject)]
-#[graphql(complex)]
-#[derive(Deserialize, Debug, Default, Clone)]
-pub struct MyBareQuestion {
-    pub question_id: String,
-    pub body: MyBareQuestionBody,
+
+/*
+Here is the structure of the question sent to frontend. 
+{
+    question_id: String
+    body: {
+        question: String (E.g. "What is the most commonly-found lattice structure of NaCl?")
+        label: Option<Vec<String>> (List all possible categories (for CAT question). For other types, left this part as NULL.)
+        choices: Vec<String> (All possible choices you want the user to answer. (E.g. In TFQ, choices=["True", "False"]))
+    }
 }
+*/
 
-#[derive(SimpleObject)]
-#[derive(Deserialize, Debug, Default, Clone)]
-pub struct MyBareQuestionBody {
-    pub question: String,
-    pub label: Option<Vec<String>>,
-    pub choices: Vec<String>
-}
-
-
-//FINALIZED VERSION
 #[derive(SimpleObject)]
 #[derive(Deserialize, Serialize, Debug, Clone, Default)]
 pub struct MyQuestion { 
@@ -38,25 +32,8 @@ pub struct MyQuestionBody {
 }
 
 
-//Formatting
-impl MyBareQuestion {
-    pub fn convert_format(&self) -> Result<MyQuestion, Box<dyn std::error::Error>> {
-
-        Ok(MyQuestion {
-            question_id: self.question_id.clone(),
-            body: MyQuestionBody {
-                question: self.body.question.clone(),
-                label: self.body.label.clone(),
-                choices: self.body.choices.clone(),
-            }
-        })
-
-    }
-}
-
-
+// Error handling for invalid responses.
 impl MyQuestion {
-    // Detailed check (check question, label, choices, ... ) will be later implemented.
     pub fn detailed_check(&self) -> Result<(),  Box<dyn std::error::Error>> {
 
         //choice must not be empty.

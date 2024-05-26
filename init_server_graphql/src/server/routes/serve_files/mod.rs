@@ -16,21 +16,21 @@ pub async fn read_markdown(file_path: String) -> impl IntoResponse {
     //define body from data stream
     let body = Body::from_stream(stream);
 
-    //define header
+    // guess MIME content type
+    // default: text/plain
     let content_type = match mime_guess::from_path(file_path.clone()).first_raw(){
         Some(x) => x,
         None => "text/plain",
     };
 
- 
-
+    // define header
     let headers = [
         (header::CONTENT_TYPE, content_type),
         (header::CONTENT_DISPOSITION,
         &format!("inline; filename=\" {} \"", file_path.clone()))
     ];
 
-    //send data
+    // send data 
     (headers, body).into_response()
 
 }
