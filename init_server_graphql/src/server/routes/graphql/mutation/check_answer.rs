@@ -5,6 +5,9 @@ use async_graphql::{Context, Object, Result, SimpleObject};
 pub use crate::server::routes::graphql::response_types::*;
 use crate::server::routes::graphql::types::User;
 
+//Hash set
+use std::collections::HashSet;
+
 #[derive(Default)]
 pub struct CheckAnswer;
 
@@ -35,31 +38,43 @@ impl CheckAnswer {
     (&self, _ctx: &Context<'_>, _user: User, file_path: String, payloads: Vec<MyResponse>) -> Result<ScoreReport>
     { 
         //Find number of questions inside the file
-        let answers_list:Result<Vec<MyResponse>> = fetch_answer(&file_path)
+        let answers_list_tmp:Result<Vec<MyResponse>> = fetch_answer(&file_path)
         .await.map_err(|e| format!("{}",e).into());
 
-        let number_question: u32 = answers_list.unwrap().len() as u32;
+        let answers_list = answers_list_tmp.unwrap();
+        let _number_question = answers_list.clone().len() as u32;
+        let mut question_id_set: HashSet<String> = answers_list
+        .iter()
+        .map(|answer| answer.question_id.clone())
+        .collect();
+        
+
         // Rough check
-        let mut correct_answer = 0;
-        let mut wrong_answer = 0;
-        let mut failed_submission_answer = 0; // Invalid response 
+        let mut correct_answer: Vec<String> = vec![];
+        let mut wrong_answer: Vec<String> = vec![];
+        let mut failed_submission_answer: Vec<String> = vec![]; // Invalid response 
 
         for payload in payloads{
+            let question_id = payload.clone().question_id.clone();
+            //remove question id from question_id_set
+            question_id_set.remove(&question_id.clone());
+
             let result:Result<bool> = handler(&file_path,payload)
             .await.map_err(|e| format!("{}",e).into());
             match result {
-                Ok(true) => {correct_answer+=1;},
-                Ok(false) => {wrong_answer+=1;},
-                Err(_) => {failed_submission_answer+=1;},
+                Ok(true) => {correct_answer.push(question_id);},
+                Ok(false) => {wrong_answer.push(question_id);},
+                Err(_) => {failed_submission_answer.push(question_id);},
             }
         };
 
+        // check the remaining unanswer question
+        let unanswered: Vec<String> = question_id_set.into_iter().collect();
         // Check if all questions are answered
-        let unanswered_count = number_question - correct_answer - wrong_answer - failed_submission_answer;
-        
+
         //TODO: Add progress to database for user: User 
         //To be implemented
-        if unanswered_count == 0 { //All questions have been answered.
+        if unanswered.len() == 0 { //All questions have been answered.
             //add data to database
         }
 
@@ -67,7 +82,7 @@ impl CheckAnswer {
         Ok(ScoreReport {
             correct: correct_answer,
             wrong: wrong_answer,
-            unanswered: unanswered_count,
+            unanswered: unanswered,
             failed: failed_submission_answer
         })
 
@@ -78,10 +93,10 @@ impl CheckAnswer {
 
 #[derive(SimpleObject)]
 pub struct ScoreReport{
-    correct: u32,
-    wrong: u32,
-    unanswered: u32,
-    failed: u32,
+    correct: Vec<String>,
+    wrong: Vec<String>,
+    unanswered: Vec<String>,
+    failed: Vec<String>,
 } 
 
 
